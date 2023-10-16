@@ -1,3 +1,11 @@
+:root {
+  --white-color: #ffffff;
+  --background-color: #f1f2f3;
+  --accent-color: #161616;
+  --typo-color: #b6b6b6;
+  --border-color: #ebebec;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,4 +14,11 @@
 
 body {
   background: #373737;
+  font-family: 'Lexend', sans-serif;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: transparent;
 }
