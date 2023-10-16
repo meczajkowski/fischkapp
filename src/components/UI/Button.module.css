@@ -1,0 +1,20 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  width: 110px;
+
+  padding: 10px 12px;
+  border-radius: 22px;
+
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px; /* 128.571% */
+}
+
+.button--filled {
+  background-color: var(--accent-color);
+  color: var(--white-color);
+}
