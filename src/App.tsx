@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   return (
     <AppLayout>
-      <AppHeader />
+      <AppHeader cardsAmount={0} />
     </AppLayout>
   );
 }
