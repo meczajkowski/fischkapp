@@ -1,0 +1,31 @@
+.content {
+  position: relative;
+  height: 100%;
+}
+
+.first-side-text {
+  position: absolute;
+  top: 14px;
+
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.delete-icon {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+}
+
+.input {
+  position: absolute;
+  top: 36px;
+}
+
+.actions {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  gap: 7px;
+}
