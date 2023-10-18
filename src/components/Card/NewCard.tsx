@@ -1,15 +1,25 @@
-import { useState } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
+import styles from './NewCard.module.css';
+
+// components
 import Button from '../UI/Button';
-import Card from '../UI/Card';
+import Card from '../UI/CardWrapper';
+import DeleteIcon from '../UI/Icons/DeleteIcon';
 import Input from '../UI/Input';
 
-import styles from './FlashCardForm.module.css';
-import DeleteIcon from '../UI/DeleteIcon';
+interface NewCardProps {
+  onCancelNewCard: MouseEventHandler;
+  onSaveNewCard: Function;
+}
 
-const FlashCardForm = () => {
+const NewCard: React.FC<NewCardProps> = (props) => {
   const [formStep, setFormStep] = useState<number>(1);
   const [firstStepInputValue, setFirstStepInputValue] = useState<string>('');
   const [secondStepInputValue, setSecondStepInputValue] = useState<string>('');
+  const cardData = {
+    firstPage: '',
+    secondPage: '',
+  };
 
   const nextStepHandler = () => {
     setFormStep(2);
@@ -27,11 +37,10 @@ const FlashCardForm = () => {
     }
   };
 
-  const saveFlashCardHandler = () => {
-    console.log('saved');
-  };
-  const deleteFlashCardHandler = () => {
-    console.log('deleted');
+  const saveCard = () => {
+    cardData.firstPage = firstStepInputValue;
+    cardData.secondPage = secondStepInputValue;
+    props.onSaveNewCard(cardData);
   };
 
   return (
@@ -42,7 +51,7 @@ const FlashCardForm = () => {
             <p className={styles['first-side-text']}>{firstStepInputValue}</p>
             <DeleteIcon
               className={styles['delete-icon']}
-              onClick={deleteFlashCardHandler}
+              onClick={props.onCancelNewCard}
             />
           </>
         )}
@@ -53,11 +62,13 @@ const FlashCardForm = () => {
         />
 
         <div className={styles.actions}>
-          <Button onClick={prevStepHandler}>
+          <Button
+            onClick={formStep === 1 ? props.onCancelNewCard : prevStepHandler}
+          >
             {formStep === 1 ? 'Cancel' : 'Back'}
           </Button>
           <Button
-            onClick={formStep === 1 ? nextStepHandler : saveFlashCardHandler}
+            onClick={formStep === 1 ? nextStepHandler : saveCard}
             filled={true}
           >
             {formStep === 1 ? 'Next' : 'Save'}
@@ -68,4 +79,4 @@ const FlashCardForm = () => {
   );
 };
 
-export default FlashCardForm;
+export default NewCard;
