@@ -1,5 +1,4 @@
 import React from 'react';
-// import styles from './CardsList.module.css';
 
 import CardWrapper from '../UI/CardWrapper';
 
