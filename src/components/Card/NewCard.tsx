@@ -22,6 +22,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
   };
 
   const nextStepHandler = () => {
+    // TODO validation
     setFormStep(2);
   };
 
@@ -38,6 +39,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
   };
 
   const saveCard = () => {
+    // TODO validation
     cardData.firstPage = firstStepInputValue;
     cardData.secondPage = secondStepInputValue;
     props.onSaveNewCard(cardData);

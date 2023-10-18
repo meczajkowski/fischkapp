@@ -5,7 +5,7 @@ import './App.css';
 import { AppHeader } from './components/AppHeader';
 import { AppLayout } from './components/AppLayout';
 import NewCard from './components/Card/NewCard';
-import CardWrapper from './components/UI/CardWrapper';
+import CardsList from './components/Card/CardsList';
 
 interface CardData {
   firstPage: string;
@@ -46,12 +46,12 @@ function App() {
         <NewCard onSaveNewCard={saveNewCard} onCancelNewCard={cancelNewCard} />
       )}
 
-      {cards.map((card) => (
-        <CardWrapper>
-          <p>{card.firstPage}</p>
-          <p>{card.secondPage}</p>
-        </CardWrapper>
-      ))}
+      {cards && <CardsList cards={cards} />}
+      {cards.length === 0 && !newCardIsAdded && (
+        <p style={{ color: 'var(--typo-color)', margin: '27px 0 0 16px' }}>
+          Add your first flashcard
+        </p>
+      )}
     </AppLayout>
   );
 }
