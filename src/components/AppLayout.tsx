@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import { PropsWithChildren } from 'react';
 import styles from './AppLayout.module.css';
 
-export const AppLayout: React.FC<{ children: ReactNode }> = (props) => (
+export const AppLayout = (props: PropsWithChildren) => (
   <div className={styles.layout}>{props.children}</div>
 );

@@ -10,15 +10,19 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Lexend', sans-serif;
 }
 
 body {
   background: #373737;
-  font-family: 'Lexend', sans-serif;
 }
 
 button {
   cursor: pointer;
   border: none;
   background: transparent;
+}
+
+ul {
+  list-style: none;
 }
