@@ -1,21 +1,21 @@
 import { useState } from 'react';
+import { CardData } from './types';
 import './App.css';
 
 // components
 import { AppHeader } from './components/AppHeader';
 import { AppLayout } from './components/AppLayout';
-import NewCard from './components/Card/NewCard';
+import Card from './components/Card/Card';
 import CardsList from './components/Card/CardsList';
+import NewCard from './components/Card/NewCard';
 
-interface CardData {
-  firstPage: string;
-  secondPage: string;
-}
+const noCardsTextStyles = {
+  color: 'var(--typo-color)',
+  margin: '27px 0 0 16px',
+};
 
 function App() {
-  const [cards, setCards] = useState<
-    { firstPage: string; secondPage: string }[]
-  >([]);
+  const [cards, setCards] = useState<CardData[]>([]);
 
   const [newCardIsAdded, setNewCardIsAdded] = useState(false);
 
@@ -30,8 +30,8 @@ function App() {
   const saveNewCard = (cardData: CardData) => {
     setCards((prevCards) => [
       {
-        firstPage: cardData.firstPage,
-        secondPage: cardData.secondPage,
+        front: cardData.front,
+        back: cardData.back,
       },
       ...prevCards,
     ]);
@@ -46,11 +46,14 @@ function App() {
         <NewCard onSaveNewCard={saveNewCard} onCancelNewCard={cancelNewCard} />
       )}
 
-      {cards && <CardsList cards={cards} />}
+      <CardsList>
+        {cards.map((card: CardData) => (
+          <Card front={card.front} back={card.back} />
+        ))}
+      </CardsList>
+
       {cards.length === 0 && !newCardIsAdded && (
-        <p style={{ color: 'var(--typo-color)', margin: '27px 0 0 16px' }}>
-          Add your first flashcard
-        </p>
+        <p style={noCardsTextStyles}>Add your first flashcard</p>
       )}
     </AppLayout>
   );

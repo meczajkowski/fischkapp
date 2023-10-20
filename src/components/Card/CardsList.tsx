@@ -1,27 +1,7 @@
-import React from 'react';
+import { PropsWithChildren } from 'react';
 
-import CardWrapper from '../UI/CardWrapper';
-
-interface CardsListProps {
-  cards: {
-    firstPage: string;
-    secondPage: string;
-  }[];
-}
-
-const CardsList: React.FC<CardsListProps> = (props) => {
-  return (
-    <ul>
-      {props.cards.map((card: { firstPage: string; secondPage: string }) => (
-        <li>
-          <CardWrapper>
-            <p>{card.firstPage}</p>
-            <p>{card.secondPage}</p>
-          </CardWrapper>
-        </li>
-      ))}
-    </ul>
-  );
+const CardsList = (props: PropsWithChildren) => {
+  return <ul>{props.children}</ul>;
 };
 
 export default CardsList;

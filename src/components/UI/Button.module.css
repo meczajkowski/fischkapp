@@ -14,7 +14,7 @@
   line-height: 18px; /* 128.571% */
 }
 
-.button--filled {
+.primary {
   background-color: var(--accent-color);
   color: var(--white-color);
 }

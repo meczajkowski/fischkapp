@@ -3,7 +3,7 @@
   height: 100%;
 }
 
-.first-side-text {
+.frontText {
   position: absolute;
   top: 14px;
 
@@ -11,7 +11,7 @@
   font-weight: 400;
 }
 
-.delete-icon {
+.deleteIcon {
   cursor: pointer;
   position: absolute;
   top: -14px;

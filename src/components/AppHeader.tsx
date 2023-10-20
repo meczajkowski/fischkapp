@@ -21,17 +21,3 @@ export const AppHeader: React.FC<AppHeaderProps> = (props) => (
     </button>
   </header>
 );
-
-// suggested by chatgpt. is this better?
-// import PropTypes from 'prop-types';
-
-// export const AppHeader: React.FC<AppHeaderProps> = (props) => (
-//   <header className={styles.header}>
-//     <LogoIcon />
-//     Cards: {props.cardsAmount}
-//   </header>
-// );
-
-// AppHeader.propTypes = {
-//   cardsAmount: PropTypes.number.isRequired,
-// };

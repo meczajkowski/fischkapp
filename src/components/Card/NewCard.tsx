@@ -1,4 +1,6 @@
 import React, { MouseEventHandler, useState } from 'react';
+import { CardData } from '../../types';
+import { CardSide } from '../../enums';
 import styles from './NewCard.module.css';
 
 // components
@@ -9,50 +11,51 @@ import Input from '../UI/Input';
 
 interface NewCardProps {
   onCancelNewCard: MouseEventHandler;
-  onSaveNewCard: Function;
+  onSaveNewCard: (cardData: CardData) => void;
 }
 
 const NewCard: React.FC<NewCardProps> = (props) => {
-  const [formStep, setFormStep] = useState<number>(1);
+  const [formStep, setFormStep] = useState<CardSide>(CardSide.front);
   const [firstStepInputValue, setFirstStepInputValue] = useState<string>('');
   const [secondStepInputValue, setSecondStepInputValue] = useState<string>('');
+  const isFront = formStep === CardSide.front;
   const cardData = {
-    firstPage: '',
-    secondPage: '',
+    front: '',
+    back: '',
   };
 
   const nextStepHandler = () => {
     // TODO validation
-    setFormStep(2);
+    setFormStep(CardSide.back);
   };
 
   const prevStepHandler = () => {
-    setFormStep(1);
+    setFormStep(CardSide.front);
   };
 
   const inputValueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (formStep === 1) {
+    if (isFront) {
       setFirstStepInputValue(event.target.value);
-    } else if (formStep === 2) {
+    } else if (!isFront) {
       setSecondStepInputValue(event.target.value);
     }
   };
 
   const saveCard = () => {
     // TODO validation
-    cardData.firstPage = firstStepInputValue;
-    cardData.secondPage = secondStepInputValue;
+    cardData.front = firstStepInputValue;
+    cardData.back = secondStepInputValue;
     props.onSaveNewCard(cardData);
   };
 
   return (
     <Card>
       <div className={styles.content}>
-        {formStep == 2 && (
+        {!isFront && (
           <>
-            <p className={styles['first-side-text']}>{firstStepInputValue}</p>
+            <p className={styles.frontText}>{firstStepInputValue}</p>
             <DeleteIcon
-              className={styles['delete-icon']}
+              className={styles.deleteIcon}
               onClick={props.onCancelNewCard}
             />
           </>
@@ -60,20 +63,21 @@ const NewCard: React.FC<NewCardProps> = (props) => {
         <Input
           className={styles.input}
           onChange={inputValueHandler}
-          value={formStep === 1 ? firstStepInputValue : secondStepInputValue}
+          value={isFront ? firstStepInputValue : secondStepInputValue}
         />
 
         <div className={styles.actions}>
           <Button
-            onClick={formStep === 1 ? props.onCancelNewCard : prevStepHandler}
+            onClick={isFront ? props.onCancelNewCard : prevStepHandler}
+            variant='secondary'
           >
-            {formStep === 1 ? 'Cancel' : 'Back'}
+            {isFront ? 'Cancel' : 'Back'}
           </Button>
           <Button
-            onClick={formStep === 1 ? nextStepHandler : saveCard}
-            filled={true}
+            onClick={isFront ? nextStepHandler : saveCard}
+            variant='primary'
           >
-            {formStep === 1 ? 'Next' : 'Save'}
+            {isFront ? 'Next' : 'Save'}
           </Button>
         </div>
       </div>
