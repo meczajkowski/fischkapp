@@ -15,8 +15,6 @@ interface NewCardProps {
 }
 
 const NewCard: React.FC<NewCardProps> = (props) => {
-  /* start of  displaying flashcards added by user with use of NewCard component*/
-
   const [formStep, setFormStep] = useState<CardSide>(CardSide.front);
   const [firstStepInputValue, setFirstStepInputValue] = useState<string>('');
   const [secondStepInputValue, setSecondStepInputValue] = useState<string>('');
