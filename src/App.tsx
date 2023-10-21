@@ -14,8 +14,19 @@ const noCardsTextStyles = {
   margin: '27px 0 0 16px',
 };
 
+const INITIAL_CARDS = [
+  {
+    front: 'This is front of the card 1',
+    back: 'This is back of the card 1',
+  },
+  {
+    front: 'This is front of the card 2',
+    back: 'This is back of the card 2',
+  },
+];
+
 function App() {
-  const [cards, setCards] = useState<CardData[]>([]);
+  const [cards, setCards] = useState<CardData[]>(INITIAL_CARDS);
 
   const [newCardIsAdded, setNewCardIsAdded] = useState(false);
 
