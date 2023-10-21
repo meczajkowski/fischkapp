@@ -1,11 +1,6 @@
-import React, { MouseEventHandler } from 'react';
+import { IconProps } from '../../../types';
 
-interface DeleteIconProps {
-  className?: string;
-  onClick?: MouseEventHandler;
-}
-
-const DeleteIcon: React.FC<DeleteIconProps> = (props) => {
+const DeleteIcon: React.FC<IconProps> = (props) => {
   return (
     <svg
       className={props.className}
