@@ -53,6 +53,7 @@ function App() {
     <AppLayout>
       <AppHeader onClick={addNewCard} cardsAmount={cards.length} />
 
+      {/* start of  displaying flashcards added by user with use of NewCard component*/}
       {newCardIsAdded && (
         <NewCard onSaveNewCard={saveNewCard} onCancelNewCard={cancelNewCard} />
       )}
