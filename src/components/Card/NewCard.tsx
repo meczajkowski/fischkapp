@@ -8,6 +8,7 @@ import Button from '../UI/Button';
 import Card from '../UI/CardWrapper';
 import DeleteIcon from '../UI/Icons/DeleteIcon';
 import Input from '../UI/Input';
+import { generateID } from '../../helpers/generateID';
 
 interface NewCardProps {
   onCancelNewCard: MouseEventHandler;
@@ -44,7 +45,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
 
   const saveCard = () => {
     // TODO validation
-    cardData.id = '';
+    cardData.id = generateID();
     cardData.front = firstStepInputValue;
     cardData.back = secondStepInputValue;
     props.onSaveNewCard(cardData);

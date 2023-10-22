@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { CardData } from './types';
-import { generateID } from './helpers/generateID';
 import './App.css';
 
 // components
@@ -44,13 +43,24 @@ function App() {
   const saveNewCard = (cardData: CardData) => {
     setCards((prevCards) => [
       {
-        id: generateID(),
+        id: cardData.id,
         front: cardData.front,
         back: cardData.back,
       },
       ...prevCards,
     ]);
     setNewCardIsAdded(false);
+  };
+
+  const updateCard = (updatedCard: CardData) => {
+    setCards((prevCards) => {
+      return prevCards.map((card) => {
+        if (card.id === updatedCard.id) {
+          return updatedCard;
+        }
+        return card;
+      });
+    });
   };
 
   return (
@@ -63,12 +73,7 @@ function App() {
 
       <CardsList>
         {cards.map((card: CardData) => (
-          <Card
-            key={card.id}
-            id={card.id}
-            front={card.front}
-            back={card.back}
-          />
+          <Card onUpdate={updateCard} key={card.id} cardData={card} />
         ))}
       </CardsList>
 

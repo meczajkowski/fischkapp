@@ -8,7 +8,12 @@ import CardWrapper from '../UI/CardWrapper';
 import EditIcon from '../UI/Icons/EditIcon';
 import EditCard from './EditCard';
 
-const Card: React.FC<CardData> = (props) => {
+interface CardProps {
+  cardData: CardData;
+  onUpdate: Function;
+}
+
+const Card: React.FC<CardProps> = (props) => {
   const [currentSide, setCurrentSide] = useState(CardSide.front);
   const [isEditMode, setIsEditMode] = useState(false);
   let isFlipped = currentSide === CardSide.back;
@@ -29,7 +34,15 @@ const Card: React.FC<CardData> = (props) => {
     console.log('edit mode');
   };
 
-  const saveHandler = () => {};
+  const saveHandler = (inputValue: string) => {
+    const updatedCard = {
+      id: props.cardData.id,
+      front: isFlipped ? props.cardData.front : inputValue,
+      back: isFlipped ? inputValue : props.cardData.back,
+    };
+    props.onUpdate(updatedCard);
+    setIsEditMode(false);
+  };
 
   return (
     <CardWrapper
@@ -38,7 +51,7 @@ const Card: React.FC<CardData> = (props) => {
     >
       {isEditMode && (
         <EditCard
-          textValue={isFlipped ? props.back : props.front}
+          textValue={isFlipped ? props.cardData.back : props.cardData.front}
           className={styles.edit}
           onCancelEdit={editHandler}
           onSaveCard={saveHandler}
@@ -49,7 +62,7 @@ const Card: React.FC<CardData> = (props) => {
           <div className={styles.content}>
             <EditIcon className={styles.icon} onClick={editHandler} />
             <p className={styles.text}>
-              {isFlipped ? props.back : props.front}
+              {isFlipped ? props.cardData.back : props.cardData.front}
             </p>
           </div>
         </>

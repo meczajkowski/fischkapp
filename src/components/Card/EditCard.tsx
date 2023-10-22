@@ -10,7 +10,7 @@ interface EditCardProps {
   className?: string;
   textValue: string;
   onCancelEdit: MouseEventHandler;
-  onSaveCard: MouseEventHandler;
+  onSaveCard: any;
 }
 
 const EditCard: React.FC<EditCardProps> = (props) => {
@@ -21,7 +21,7 @@ const EditCard: React.FC<EditCardProps> = (props) => {
   };
 
   const saveEditedCard = () => {
-    // props.onSaveCard(inputValue);
+    props.onSaveCard(inputValue);
   };
 
   return (
