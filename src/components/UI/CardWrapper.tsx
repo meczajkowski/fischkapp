@@ -1,8 +1,21 @@
-import { PropsWithChildren } from 'react';
+import { ReactNode } from 'react';
 import styles from './CardWrapper.module.css';
 
-const CardWrapper = (props: PropsWithChildren) => {
-  return <div className={styles.card}>{props.children}</div>;
+interface CardWrapperProps {
+  children: ReactNode;
+  className?: string;
+  onClick?: () => void;
+}
+
+const CardWrapper: React.FC<CardWrapperProps> = (props) => {
+  return (
+    <div
+      onClick={props.onClick}
+      className={`${styles.card} ${props.className}`}
+    >
+      {props.children}
+    </div>
+  );
 };
 
 export default CardWrapper;
