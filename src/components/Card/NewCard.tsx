@@ -20,6 +20,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
   const [secondStepInputValue, setSecondStepInputValue] = useState<string>('');
   const isFront = formStep === CardSide.front;
   const cardData = {
+    id: '',
     front: '',
     back: '',
   };
@@ -43,6 +44,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
 
   const saveCard = () => {
     // TODO validation
+    cardData.id = '';
     cardData.front = firstStepInputValue;
     cardData.back = secondStepInputValue;
     props.onSaveNewCard(cardData);

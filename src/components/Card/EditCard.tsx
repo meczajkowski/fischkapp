@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useState } from 'react';
 import styles from './NewCard.module.css';
 
 // components
@@ -14,7 +14,16 @@ interface EditCardProps {
 }
 
 const EditCard: React.FC<EditCardProps> = (props) => {
-  const inputValueHandler = () => {};
+  const [inputValue, setInputValue] = useState(props.textValue);
+
+  const inputValueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const saveEditedCard = () => {
+    // props.onSaveCard(inputValue);
+  };
+
   return (
     <>
       <div className={`${styles.content} ${props.className}`}>
@@ -25,14 +34,14 @@ const EditCard: React.FC<EditCardProps> = (props) => {
         <Input
           className={styles.input}
           onChange={inputValueHandler}
-          value={props.textValue}
+          value={inputValue}
         />
 
         <div className={styles.actions}>
           <Button onClick={props.onCancelEdit} variant='secondary'>
             Cancel
           </Button>
-          <Button onClick={props.onSaveCard} variant='primary'>
+          <Button onClick={saveEditedCard} variant='primary'>
             Save
           </Button>
         </div>

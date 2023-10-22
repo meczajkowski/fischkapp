@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CardData } from './types';
+import { generateID } from './helpers/generateID';
 import './App.css';
 
 // components
@@ -16,10 +17,12 @@ const noCardsTextStyles = {
 
 const INITIAL_CARDS = [
   {
+    id: '18b58e36276',
     front: 'This is front of the card 1',
     back: 'This is back of the card 1',
   },
   {
+    id: '18b58e35526',
     front: 'This is front of the card 2',
     back: 'This is back of the card 2',
   },
@@ -41,6 +44,7 @@ function App() {
   const saveNewCard = (cardData: CardData) => {
     setCards((prevCards) => [
       {
+        id: generateID(),
         front: cardData.front,
         back: cardData.back,
       },
@@ -59,7 +63,12 @@ function App() {
 
       <CardsList>
         {cards.map((card: CardData) => (
-          <Card front={card.front} back={card.back} />
+          <Card
+            key={card.id}
+            id={card.id}
+            front={card.front}
+            back={card.back}
+          />
         ))}
       </CardsList>
 
