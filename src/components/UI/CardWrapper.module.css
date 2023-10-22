@@ -7,4 +7,6 @@
   border-radius: 15px;
   border: 1px solid var(--border-color);
   background: var(--white-color);
+
+  transition: transform 0.5s;
 }
