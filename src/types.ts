@@ -1,5 +1,3 @@
-import { MouseEventHandler } from 'react';
-
 export type CardData = {
   id: string;
   front: string;
@@ -8,5 +6,5 @@ export type CardData = {
 
 export type IconProps = {
   className?: string;
-  onClick?: MouseEventHandler;
+  onClick?: () => void;
 };

@@ -10,7 +10,7 @@ import EditCard from './EditCard';
 
 interface CardProps {
   cardData: CardData;
-  onUpdate: Function;
+  onUpdate: (card: CardData) => void;
 }
 
 const Card: React.FC<CardProps> = (props) => {

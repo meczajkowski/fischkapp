@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './NewCard.module.css';
 
 // components
@@ -9,8 +9,8 @@ import Input from '../UI/Input';
 interface EditCardProps {
   className?: string;
   textValue: string;
-  onCancelEdit: MouseEventHandler;
-  onSaveCard: any;
+  onCancelEdit: () => void;
+  onSaveCard: (inputValue: string) => void;
 }
 
 const EditCard: React.FC<EditCardProps> = (props) => {

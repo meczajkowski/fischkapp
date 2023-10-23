@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 import { CardData } from '../../types';
 import { CardSide } from '../../enums';
 import styles from './NewCard.module.css';
@@ -11,7 +11,7 @@ import Input from '../UI/Input';
 import { generateID } from '../../helpers/generateID';
 
 interface NewCardProps {
-  onCancelNewCard: MouseEventHandler;
+  onCancelNewCard: () => void;
   onSaveNewCard: (cardData: CardData) => void;
 }
 
