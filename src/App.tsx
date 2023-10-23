@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CardData } from './types';
 import './App.css';
 
@@ -68,6 +68,19 @@ function App() {
       return prevCards.filter((card) => card.id !== cardToRemove.id);
     });
   };
+
+  useEffect(() => {
+    fetch('https://training.nerdbord.io/api/v1/fischkapp/flashcards')
+      .then((response) => response.json())
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching flashcards:', error);
+      });
+
+    console.log(cards);
+  }, []);
 
   return (
     <AppLayout>
