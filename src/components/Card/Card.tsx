@@ -21,10 +21,7 @@ const Card: React.FC<CardProps> = (props) => {
 
   const flipHandler = () => {
     if (isEditMode) return;
-    if (event?.target === document.querySelector(`.${styles.icon}`)) {
-      // Click occurred on the EditIcon, do not flip
-      return;
-    }
+
     setCurrentSide((prevSide) =>
       prevSide === CardSide.front ? CardSide.back : CardSide.front
     );

@@ -1,10 +1,14 @@
 import { IconProps } from '../../../types';
 
 const EditIcon: React.FC<IconProps> = (props) => {
+  const handleClick = (event: React.MouseEvent) => {
+    event.stopPropagation(); // Prevent the click event from propagating to parent
+    props.onClick && props.onClick(event);
+  };
   return (
     <svg
       className={props.className}
-      onClick={props.onClick}
+      onClick={handleClick}
       width='40'
       height='40'
       viewBox='0 0 40 40'
