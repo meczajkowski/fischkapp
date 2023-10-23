@@ -31,7 +31,6 @@ const Card: React.FC<CardProps> = (props) => {
 
   const editHandler = () => {
     setIsEditMode((prevIsEditMode) => !prevIsEditMode);
-    console.log('edit mode');
   };
 
   const saveHandler = (inputValue: string) => {
