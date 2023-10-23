@@ -11,6 +11,7 @@ interface EditCardProps {
   textValue: string;
   onCancelEdit: () => void;
   onSaveCard: (inputValue: string) => void;
+  onDeleteCard: () => void;
 }
 
 const EditCard: React.FC<EditCardProps> = (props) => {
@@ -29,7 +30,7 @@ const EditCard: React.FC<EditCardProps> = (props) => {
       <div className={`${styles.content} ${props.className}`}>
         <DeleteIcon
           className={styles.deleteIcon}
-          onClick={props.onCancelEdit}
+          onClick={props.onDeleteCard}
         />
         <Input
           className={styles.input}

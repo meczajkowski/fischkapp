@@ -11,6 +11,7 @@ import EditCard from './EditCard';
 interface CardProps {
   cardData: CardData;
   onUpdate: (card: CardData) => void;
+  onDelete: (cardToRemove: CardData) => void;
 }
 
 const Card: React.FC<CardProps> = (props) => {
@@ -43,6 +44,11 @@ const Card: React.FC<CardProps> = (props) => {
     setIsEditMode(false);
   };
 
+  const removeCardHandler = () => {
+    props.onDelete(props.cardData);
+    setIsEditMode(false);
+  };
+
   return (
     <CardWrapper
       onClick={flipHandler}
@@ -54,6 +60,7 @@ const Card: React.FC<CardProps> = (props) => {
           className={styles.edit}
           onCancelEdit={editHandler}
           onSaveCard={saveHandler}
+          onDeleteCard={removeCardHandler}
         ></EditCard>
       )}
       {!isEditMode && (

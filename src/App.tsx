@@ -63,6 +63,12 @@ function App() {
     });
   };
 
+  const removeCard = (cardToRemove: CardData) => {
+    setCards((prevCards) => {
+      return prevCards.filter((card) => card.id !== cardToRemove.id);
+    });
+  };
+
   return (
     <AppLayout>
       <AppHeader onClick={addNewCard} cardsAmount={cards.length} />
@@ -73,7 +79,12 @@ function App() {
 
       <CardsList>
         {cards.map((card: CardData) => (
-          <Card onUpdate={updateCard} key={card.id} cardData={card} />
+          <Card
+            onDelete={removeCard}
+            onUpdate={updateCard}
+            key={card.id}
+            cardData={card}
+          />
         ))}
       </CardsList>
 
