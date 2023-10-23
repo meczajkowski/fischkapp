@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useState } from 'react';
+import React, { useState } from 'react';
 import { CardData } from '../../types';
 import { CardSide } from '../../enums';
 import styles from './NewCard.module.css';
@@ -8,9 +8,10 @@ import Button from '../UI/Button';
 import Card from '../UI/CardWrapper';
 import DeleteIcon from '../UI/Icons/DeleteIcon';
 import Input from '../UI/Input';
+import { generateID } from '../../helpers/generateID';
 
 interface NewCardProps {
-  onCancelNewCard: MouseEventHandler;
+  onCancelNewCard: () => void;
   onSaveNewCard: (cardData: CardData) => void;
 }
 
@@ -19,10 +20,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
   const [firstStepInputValue, setFirstStepInputValue] = useState<string>('');
   const [secondStepInputValue, setSecondStepInputValue] = useState<string>('');
   const isFront = formStep === CardSide.front;
-  const cardData = {
-    front: '',
-    back: '',
-  };
+  let cardData: CardData;
 
   const nextStepHandler = () => {
     // TODO validation
@@ -43,8 +41,12 @@ const NewCard: React.FC<NewCardProps> = (props) => {
 
   const saveCard = () => {
     // TODO validation
-    cardData.front = firstStepInputValue;
-    cardData.back = secondStepInputValue;
+    cardData = {
+      id: generateID(),
+      front: firstStepInputValue,
+      back: secondStepInputValue,
+    };
+
     props.onSaveNewCard(cardData);
   };
 

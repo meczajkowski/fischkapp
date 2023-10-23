@@ -28,6 +28,7 @@
   transform: rotateY(180deg);
 }
 
-.flipped .content {
+.flipped .content,
+.flipped .edit {
   transform: rotateY(180deg);
 }

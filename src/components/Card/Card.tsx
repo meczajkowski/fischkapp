@@ -6,20 +6,41 @@ import { CardSide } from '../../enums';
 // components
 import CardWrapper from '../UI/CardWrapper';
 import EditIcon from '../UI/Icons/EditIcon';
+import EditCard from './EditCard';
 
-const Card: React.FC<CardData> = (props) => {
+interface CardProps {
+  cardData: CardData;
+  onUpdate: (card: CardData) => void;
+}
+
+const Card: React.FC<CardProps> = (props) => {
   const [currentSide, setCurrentSide] = useState(CardSide.front);
+  const [isEditMode, setIsEditMode] = useState(false);
   let isFlipped = currentSide === CardSide.back;
 
   const flipHandler = () => {
-    console.log(event?.target); //if event.target is EditIcon return
+    if (isEditMode) return;
+    if (event?.target === document.querySelector(`.${styles.icon}`)) {
+      // Click occurred on the EditIcon, do not flip
+      return;
+    }
     setCurrentSide((prevSide) =>
       prevSide === CardSide.front ? CardSide.back : CardSide.front
     );
   };
 
   const editHandler = () => {
-    console.log('edit mode');
+    setIsEditMode((prevIsEditMode) => !prevIsEditMode);
+  };
+
+  const saveHandler = (inputValue: string) => {
+    const updatedCard = {
+      id: props.cardData.id,
+      front: isFlipped ? props.cardData.front : inputValue,
+      back: isFlipped ? inputValue : props.cardData.back,
+    };
+    props.onUpdate(updatedCard);
+    setIsEditMode(false);
   };
 
   return (
@@ -27,10 +48,24 @@ const Card: React.FC<CardData> = (props) => {
       onClick={flipHandler}
       className={isFlipped ? styles.flipped : ''}
     >
-      <div className={styles.content}>
-        <EditIcon className={styles.icon} onClick={editHandler} />
-        <p className={styles.text}>{isFlipped ? props.back : props.front}</p>
-      </div>
+      {isEditMode && (
+        <EditCard
+          textValue={isFlipped ? props.cardData.back : props.cardData.front}
+          className={styles.edit}
+          onCancelEdit={editHandler}
+          onSaveCard={saveHandler}
+        ></EditCard>
+      )}
+      {!isEditMode && (
+        <>
+          <div className={styles.content}>
+            <EditIcon className={styles.icon} onClick={editHandler} />
+            <p className={styles.text}>
+              {isFlipped ? props.cardData.back : props.cardData.front}
+            </p>
+          </div>
+        </>
+      )}
     </CardWrapper>
   );
 };

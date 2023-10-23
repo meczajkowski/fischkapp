@@ -16,10 +16,12 @@ const noCardsTextStyles = {
 
 const INITIAL_CARDS = [
   {
+    id: '18b58e36276',
     front: 'This is front of the card 1',
     back: 'This is back of the card 1',
   },
   {
+    id: '18b58e35526',
     front: 'This is front of the card 2',
     back: 'This is back of the card 2',
   },
@@ -41,12 +43,24 @@ function App() {
   const saveNewCard = (cardData: CardData) => {
     setCards((prevCards) => [
       {
+        id: cardData.id,
         front: cardData.front,
         back: cardData.back,
       },
       ...prevCards,
     ]);
     setNewCardIsAdded(false);
+  };
+
+  const updateCard = (updatedCard: CardData) => {
+    setCards((prevCards) => {
+      return prevCards.map((card) => {
+        if (card.id === updatedCard.id) {
+          return updatedCard;
+        }
+        return card;
+      });
+    });
   };
 
   return (
@@ -59,7 +73,7 @@ function App() {
 
       <CardsList>
         {cards.map((card: CardData) => (
-          <Card front={card.front} back={card.back} />
+          <Card onUpdate={updateCard} key={card.id} cardData={card} />
         ))}
       </CardsList>
 
