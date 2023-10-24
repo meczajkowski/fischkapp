@@ -17,6 +17,7 @@ const noCardsTextStyles = {
 function App() {
   const [cards, setCards] = useState<CardData[]>([]);
   const [newCardIsAdded, setNewCardIsAdded] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const addNewCard = () => {
     setNewCardIsAdded(true);
@@ -56,6 +57,7 @@ function App() {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     fetch('https://training.nerdbord.io/api/v1/fischkapp/flashcards')
       .then((response) => response.json())
       .then((data) => {
@@ -68,9 +70,11 @@ function App() {
         });
 
         setCards(APIcards);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error('Error fetching flashcards:', error);
+        setIsLoading(false);
       });
   }, []);
 
@@ -93,9 +97,10 @@ function App() {
         ))}
       </CardsList>
 
-      {cards.length === 0 && !newCardIsAdded && (
+      {cards.length === 0 && !newCardIsAdded && !isLoading && (
         <p style={noCardsTextStyles}>Add your first flashcard</p>
       )}
+      {isLoading && <p style={noCardsTextStyles}>Loading...</p>}
     </AppLayout>
   );
 }
