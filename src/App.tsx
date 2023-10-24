@@ -29,15 +29,28 @@ function App() {
   };
 
   const saveNewCard = (cardData: CardData) => {
-    setCards((prevCards) => [
-      {
-        id: cardData.id,
+    setIsLoading(true);
+
+    fetch('https://training.nerdbord.io/api/v1/fischkapp/flashcards', {
+      method: 'POST',
+      headers: {
+        Authorization: 'secret_token',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         front: cardData.front,
         back: cardData.back,
-      },
-      ...prevCards,
-    ]);
-    setNewCardIsAdded(false);
+      }),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        fetchFlashcards();
+        setNewCardIsAdded(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setIsLoading(false);
+      });
   };
 
   const updateCard = (updatedCard: CardData) => {
@@ -57,7 +70,7 @@ function App() {
     });
   };
 
-  useEffect(() => {
+  const fetchFlashcards = () => {
     setIsLoading(true);
     fetch('https://training.nerdbord.io/api/v1/fischkapp/flashcards')
       .then((response) => response.json())
@@ -78,6 +91,10 @@ function App() {
         setError(err.message);
         setIsLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchFlashcards();
   }, []);
 
   return (
@@ -88,16 +105,18 @@ function App() {
         <NewCard onSaveNewCard={saveNewCard} onCancelNewCard={cancelNewCard} />
       )}
 
-      <CardsList>
-        {cards.map((card: CardData) => (
-          <Card
-            onDelete={removeCard}
-            onUpdate={updateCard}
-            key={card.id}
-            cardData={card}
-          />
-        ))}
-      </CardsList>
+      {!error && !isLoading && (
+        <CardsList>
+          {cards.map((card: CardData) => (
+            <Card
+              onDelete={removeCard}
+              onUpdate={updateCard}
+              key={card.id}
+              cardData={card}
+            />
+          ))}
+        </CardsList>
+      )}
 
       {cards.length === 0 && !newCardIsAdded && !isLoading && !error && (
         <p style={noCardsTextStyles}>Add your first flashcard</p>
