@@ -81,9 +81,28 @@ function App() {
   };
 
   const removeCard = (cardToRemove: CardData) => {
-    setCards((prevCards) => {
-      return prevCards.filter((card) => card.id !== cardToRemove.id);
-    });
+    setIsLoading(true);
+
+    fetch(
+      `https://training.nerdbord.io/api/v1/fischkapp/flashcards/${cardToRemove.id}`,
+      {
+        method: 'DELETE',
+        headers: {
+          Authorization: 'secret_token',
+        },
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          fetchFlashcards();
+        } else {
+          throw new Error('Failed to delete the flashcard');
+        }
+      })
+      .catch((err) => {
+        setError(err.message);
+        setIsLoading(false);
+      });
   };
 
   const fetchFlashcards = () => {
