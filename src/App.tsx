@@ -18,6 +18,7 @@ function App() {
   const [cards, setCards] = useState<CardData[]>([]);
   const [newCardIsAdded, setNewCardIsAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const addNewCard = () => {
     setNewCardIsAdded(true);
@@ -71,9 +72,10 @@ function App() {
 
         setCards(APIcards);
         setIsLoading(false);
+        setError(null);
       })
-      .catch((error) => {
-        console.error('Error fetching flashcards:', error);
+      .catch((err) => {
+        setError(err.message);
         setIsLoading(false);
       });
   }, []);
@@ -97,10 +99,11 @@ function App() {
         ))}
       </CardsList>
 
-      {cards.length === 0 && !newCardIsAdded && !isLoading && (
+      {cards.length === 0 && !newCardIsAdded && !isLoading && !error && (
         <p style={noCardsTextStyles}>Add your first flashcard</p>
       )}
       {isLoading && <p style={noCardsTextStyles}>Loading...</p>}
+      {error && <p style={noCardsTextStyles}>{error}</p>}
     </AppLayout>
   );
 }
