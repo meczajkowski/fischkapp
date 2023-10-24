@@ -54,14 +54,30 @@ function App() {
   };
 
   const updateCard = (updatedCard: CardData) => {
-    setCards((prevCards) => {
-      return prevCards.map((card) => {
-        if (card.id === updatedCard.id) {
-          return updatedCard;
-        }
-        return card;
+    setIsLoading(true);
+
+    fetch(
+      `https://training.nerdbord.io/api/v1/fischkapp/flashcards/${updatedCard.id}`,
+      {
+        method: 'PATCH',
+        headers: {
+          Authorization: 'secret_token',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          front: updatedCard.front,
+          back: updatedCard.back,
+        }),
+      }
+    )
+      .then((response) => response.json())
+      .then(() => {
+        fetchFlashcards();
+      })
+      .catch((err) => {
+        setError(err.message);
+        setIsLoading(false);
       });
-    });
   };
 
   const removeCard = (cardToRemove: CardData) => {
