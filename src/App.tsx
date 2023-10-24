@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CardData } from './types';
+import { APIcardData, CardData } from './types';
 import './App.css';
 
 // components
@@ -14,22 +14,8 @@ const noCardsTextStyles = {
   margin: '27px 0 0 16px',
 };
 
-const INITIAL_CARDS = [
-  {
-    id: '18b58e36276',
-    front: 'This is front of the card 1',
-    back: 'This is back of the card 1',
-  },
-  {
-    id: '18b58e35526',
-    front: 'This is front of the card 2',
-    back: 'This is back of the card 2',
-  },
-];
-
 function App() {
-  const [cards, setCards] = useState<CardData[]>(INITIAL_CARDS);
-
+  const [cards, setCards] = useState<CardData[]>([]);
   const [newCardIsAdded, setNewCardIsAdded] = useState(false);
 
   const addNewCard = () => {
@@ -73,13 +59,19 @@ function App() {
     fetch('https://training.nerdbord.io/api/v1/fischkapp/flashcards')
       .then((response) => response.json())
       .then((data) => {
-        setCards(data);
+        const APIcards = data.map((APIcard: APIcardData) => {
+          return {
+            id: APIcard._id,
+            front: APIcard.front,
+            back: APIcard.back,
+          };
+        });
+
+        setCards(APIcards);
       })
       .catch((error) => {
         console.error('Error fetching flashcards:', error);
       });
-
-    console.log(cards);
   }, []);
 
   return (
