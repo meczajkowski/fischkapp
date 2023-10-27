@@ -29,7 +29,7 @@ describe('App', () => {
         expect(newCardInput).toBeInTheDocument()
     })
 
-    it('should not be possible to add a flashcard when front or back card value is empty', async () => {
+    it('should not be possible to add a flashcard when front card value is empty', async () => {
         render(<App />)
         fetchMock.mockResponse(JSON.stringify([]));
 
