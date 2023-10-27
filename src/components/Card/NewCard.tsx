@@ -39,8 +39,12 @@ const NewCard: React.FC<NewCardProps> = (props) => {
   };
 
   const saveCard = () => {
-    if (!isValidInputValue(secondStepInputValue)) return;
-    
+    if (
+      !isValidInputValue(secondStepInputValue) ||
+      !isValidInputValue(firstStepInputValue)
+    )
+      return;
+
     cardData = {
       id: generateID(),
       front: firstStepInputValue,
