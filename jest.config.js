@@ -11,4 +11,5 @@ export default {
   },
   automock: false,
   resetMocks: false,
+  setupFiles: ["./setupJest.js"],
 };

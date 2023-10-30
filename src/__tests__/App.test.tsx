@@ -10,8 +10,8 @@ beforeEach(() => {
 
 test("renders App component", async () => {
   const mockCards = [
-    { id: "1", front: "Front 1", back: "Back 1" },
-    { id: "2", front: "Front 2", back: "Back 2" },
+    { _id: "1", front: "Front 1", back: "Back 1" },
+    { _id: "2", front: "Front 2", back: "Back 2" },
   ];
 
   fetchMock.mockResponse(JSON.stringify(mockCards));
@@ -27,5 +27,7 @@ test("renders App component", async () => {
     expect(screen.getByText("Front 1")).toBeInTheDocument();
     expect(screen.getByText("Front 2")).toBeInTheDocument();
     expect(screen.queryByText("Loading...")).toBeNull();
+    debug()
   });
+
 });
