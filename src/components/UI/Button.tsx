@@ -5,6 +5,7 @@ interface ButtonProps {
   variant: 'primary' | 'secondary';
   children: string;
   onClick?: MouseEventHandler;
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
@@ -12,6 +13,7 @@ const Button: React.FC<ButtonProps> = (props) => {
 
   return (
     <button
+      disabled={props.disabled}
       onClick={props.onClick}
       className={`${styles.button}  ${isPrimary && styles.primary}`}
     >
