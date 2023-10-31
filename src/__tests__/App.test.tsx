@@ -5,24 +5,22 @@ import App from "../App";
 
 beforeEach(() => {
   fetchMock.resetMocks();
-  fetchMock.resetMocks();
+  fetchMock.enableMocks();
 });
 
 describe("App", () => {
-  it("should render app component with mocked 0 cards", async () => {
-    // Wrap your test code with act
+  it("should render app component with new card form closed initially", async () => {
     await act(async () => {
       render(<App />);
-      fetchMock.mockResponse(JSON.stringify([]));
+      fetchMock.mockResponseOnce(JSON.stringify([]));
     });
 
     await waitFor(() => {
       expect(screen.queryByText("Loading...")).toBeNull();
-      expect(screen.queryByRole("input")).not.toBeInTheDocument();
+      expect(screen.getByText("Add your first flashcard")).toBeInTheDocument();
+      expect(screen.queryByTestId("new-card-form")).not.toBeInTheDocument();
       expect(screen.queryByTestId("cards-list")).toBeEmptyDOMElement();
     });
-
-    screen.debug();
   });
 
   // it("should open form when CTA button is clicked", async () => {
