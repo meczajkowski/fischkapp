@@ -74,27 +74,50 @@ describe("App", () => {
     // />
   });
 
-  // it("should not be possible to add a flashcard when front card value is empty", async () => {
-  //   await act(async () => {
-  //     render(<App />);
-  //     fetchMock.mockResponse(JSON.stringify([]));
-  //   });
+  it("should not be possible to add a flashcard when front card value is empty", async () => {
+    await act(async () => {
+      render(<App />);
+      fetchMock.mockResponse(JSON.stringify([]));
+    });
 
-  //   const ctaButton = screen.getByRole("button");
-  //   fireEvent.click(ctaButton);
+    const ctaButton = screen.getByRole("button");
+    fireEvent.click(ctaButton);
 
-  //   let newCardInput = await screen.findByRole("textbox");
-  //   fireEvent.change(newCardInput, { target: { value: "" } });
+    const frontInput = await screen.findByRole("textbox");
+    fireEvent.change(frontInput, { target: { value: "" } });
 
-  //   const nextStepButton = screen.getByText("Next");
-  //   expect(screen.getByText("Next")).toBeDisabled();
+    expect(screen.getByText("Next")).toBeDisabled();
 
-  //   fireEvent.change(newCardInput, { target: { value: "This is front" } });
-  //   fireEvent.click(nextStepButton);
+    screen.debug();
 
-  //   const saveCardButton = await screen.findByText("Save");
-  //   expect(saveCardButton).toBeInTheDocument();
-  // });
+    // returns html - button disabled="" ul still selfclosing
+
+    // <div
+    //     class="undefined undefined"
+    //   >
+    //     <div
+    //       data-testid="new-card-form"
+    //     >
+    //       <input
+    //         class=" "
+    //         type="text"
+    //         value=""
+    //       />
+    //       <div>
+    //         <button
+    //           class="undefined  false"
+    //         >
+    //           Cancel
+    //         </button>
+    //         <button
+    //           class="undefined  undefined"
+    //           disabled=""
+    //         >
+    //           Next
+    //         </button>
+    //       </div>
+    //     </div>
+  });
 
   // it("should not be possible to add a flashcard when back card value is empty", async () => {
   //   await act(async () => {
