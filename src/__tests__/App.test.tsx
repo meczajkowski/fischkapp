@@ -1,6 +1,12 @@
 import "@testing-library/jest-dom";
 import fetchMock from "jest-fetch-mock";
-import { render, screen, act, waitFor } from "@testing-library/react";
+import {
+  render,
+  screen,
+  act,
+  waitFor,
+  fireEvent,
+} from "@testing-library/react";
 import App from "../App";
 
 beforeEach(() => {
@@ -9,6 +15,7 @@ beforeEach(() => {
 });
 
 describe("App", () => {
+  // render app with mocked 0 cards
   it("should render app component with new card form closed initially", async () => {
     await act(async () => {
       render(<App />);
@@ -23,18 +30,49 @@ describe("App", () => {
     });
   });
 
-  // it("should open form when CTA button is clicked", async () => {
-  //   await act(async () => {
-  //     render(<App />);
-  //     fetchMock.mockResponse(JSON.stringify([]));
-  //   });
+  // open form when CTA clicked
+  it("should open form when CTA button is clicked", async () => {
+    await act(async () => {
+      render(<App />);
+      fetchMock.mockResponse(JSON.stringify([]));
+    });
 
-  //   const ctaButton = screen.getByRole("button");
-  //   fireEvent.click(ctaButton);
+    const ctaButton = screen.getByRole("button");
+    fireEvent.click(ctaButton);
 
-  //   const newCardInput = await screen.findByRole("textbox");
-  //   expect(newCardInput).toBeInTheDocument();
-  // });
+    expect(screen.getByTestId("new-card-form")).toBeInTheDocument();
+    // screen.debug();
+
+    // debug returned html after header closing tag ->
+    // why ul is a selfclosing tag?
+
+    //   <div
+    //     data-testid="new-card-form"
+    //   >
+    //     <input
+    //       class=" "
+    //       type="text"
+    //       value=""
+    //     />
+    //     <div>
+    //       <button
+    //         class="undefined  false"
+    //       >
+    //         Cancel
+    //       </button>
+    //       <button
+    //         class="undefined  undefined"
+    //         disabled=""
+    //       >
+    //         Next
+    //       </button>
+    //     </div>
+    //   </div>
+    // </div>
+    // <ul
+    //   data-testid="cards-list"
+    // />
+  });
 
   // it("should not be possible to add a flashcard when front card value is empty", async () => {
   //   await act(async () => {
