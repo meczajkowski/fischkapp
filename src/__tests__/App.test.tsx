@@ -74,6 +74,7 @@ describe("App", () => {
     // />
   });
 
+  // dont send form whith front input empty
   it("should not be possible to add a flashcard when front card value is empty", async () => {
     await act(async () => {
       render(<App />);
@@ -82,6 +83,8 @@ describe("App", () => {
 
     const ctaButton = screen.getByRole("button");
     fireEvent.click(ctaButton);
+
+    expect(screen.getByTestId("new-card-form")).toBeInTheDocument();
 
     const frontInput = await screen.findByRole("textbox");
     fireEvent.change(frontInput, { target: { value: "" } });
@@ -119,36 +122,32 @@ describe("App", () => {
     //     </div>
   });
 
-  // it("should not be possible to add a flashcard when back card value is empty", async () => {
-  //   await act(async () => {
-  //     render(<App />);
-  //     fetchMock.mockResponse(JSON.stringify([]));
-  //   });
+  // dont send form when back input empty
+  it("should not be possible to add a flashcard when back card value is empty", async () => {
+    await act(async () => {
+      render(<App />);
+      fetchMock.mockResponse(JSON.stringify([]));
+    });
 
-  //   const ctaButton = screen.getByRole("button");
-  //   fireEvent.click(ctaButton);
+    const ctaButton = screen.getByRole("button");
+    fireEvent.click(ctaButton);
 
-  //   let newCardInput = await screen.findByRole("textbox");
-  //   fireEvent.change(newCardInput, { target: { value: "" } });
+    expect(screen.getByTestId("new-card-form")).toBeInTheDocument();
 
-  //   const nextStepButton = await screen.findByText("Next");
-  //   fireEvent.click(nextStepButton);
+    const frontInput = await screen.findByRole("textbox");
+    fireEvent.change(frontInput, { target: { value: "This is front" } });
 
-  //   let saveCardButton = screen.queryByText("Save");
-  //   expect(saveCardButton).not.toBeInTheDocument();
+    const nextStepButton = await screen.findByText("Next");
+    fireEvent.click(nextStepButton);
 
-  //   fireEvent.change(newCardInput, { target: { value: "This is front" } });
-  //   fireEvent.click(nextStepButton);
+    const backInput = await screen.findByRole("textbox");
+    expect(backInput).toBeInTheDocument();
 
-  //   saveCardButton = await screen.findByText("Save");
-  //   expect(saveCardButton).toBeInTheDocument();
+    fireEvent.change(backInput, { target: { value: "" } });
+    expect(screen.getByText("Save")).toBeDisabled();
 
-  //   newCardInput = await screen.findByRole("textbox");
-
-  //   fireEvent.change(newCardInput, { target: { value: "" } });
-  //   fireEvent.click(saveCardButton);
-  //   expect(saveCardButton).toBeInTheDocument();
-  // });
+    screen.debug();
+  });
 
   // it("should be possible to add a flashcard when front and back card value is not empty", async () => {
   //   await act(async () => {
