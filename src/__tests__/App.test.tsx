@@ -31,7 +31,7 @@ describe("App", () => {
   });
 
   // open form when CTA clicked
-  it("should open form when CTA button is clicked", async () => {
+  it("should open the new card form when the 'Add Card' button is clicked.", async () => {
     await act(async () => {
       render(<App />);
       fetchMock.mockResponse(JSON.stringify([]));
@@ -91,7 +91,7 @@ describe("App", () => {
 
     expect(screen.getByText("Next")).toBeDisabled();
 
-    screen.debug();
+    // screen.debug();
 
     // returns html - button disabled="" ul still selfclosing
 
@@ -146,13 +146,15 @@ describe("App", () => {
     fireEvent.change(backInput, { target: { value: "" } });
     expect(screen.getByText("Save")).toBeDisabled();
 
-    screen.debug();
+    // screen.debug();
   });
 
   it("should be possible to add a flashcard when front and back card value is not empty", async () => {
     await act(async () => {
       render(<App />);
-      fetchMock.mockResponse(JSON.stringify([]));
+      fetchMock.mockResponse(
+        JSON.stringify([{ _id: "1", front: "first front", back: "first back" }])
+      );
     });
 
     const ctaButton = screen.getByRole("button");
@@ -172,11 +174,29 @@ describe("App", () => {
     fireEvent.change(backInput, { target: { value: "This is back" } });
 
     await act(async () => {
+      // Mock the POST request to add the new card.
+      fetchMock.mockResponse(
+        JSON.stringify([
+          { _id: "2", front: "This is front", back: "This is back" },
+        ])
+      );
+
       fireEvent.click(screen.getByText("Save"));
+
+      // Mock the GET request again to fetch the updated list of cards.
+      fetchMock.mockResponse(
+        JSON.stringify([
+          { _id: "1", front: "first front", back: "first back" },
+          { _id: "2", front: "This is front", back: "This is back" },
+        ])
+      );
     });
 
-    screen.debug();
+    const initialCard = screen.getByText("first front");
+    const addedCard = screen.getByText("This is front");
+    expect(initialCard).toBeInTheDocument();
+    expect(addedCard).toBeInTheDocument();
 
-    // now form is closed and what to do next? how should i receive this card in my cards list?
+    screen.debug();
   });
 });
