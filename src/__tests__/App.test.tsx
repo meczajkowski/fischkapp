@@ -18,6 +18,9 @@ describe('App', () => {
     expect(screen.queryByTestId('new-card-form')).not.toBeInTheDocument();
     expect(screen.queryByTestId('cards-list')).toBeEmptyDOMElement();
   });
+});
+
+describe('Adding flashcard', () => {
   // open form when CTA clicked
   it("should open the new card form when the 'Add Card' button is clicked.", async () => {
     fetchMock.mockResponse(JSON.stringify([]));
