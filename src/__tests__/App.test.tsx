@@ -1,33 +1,28 @@
-import "@testing-library/jest-dom";
-import { render, screen, waitFor } from "@testing-library/react";
-import fetchMock from "jest-fetch-mock";
-
-import App from "../App";
+import '@testing-library/jest-dom';
+import fetchMock from 'jest-fetch-mock';
+import { render } from '@testing-library/react';
+import App from '../App';
 
 beforeEach(() => {
   fetchMock.resetMocks();
+  fetchMock.enableMocks();
 });
 
-test("renders App component", async () => {
-  const mockCards = [
-    { _id: "1", front: "Front 1", back: "Back 1" },
-    { _id: "2", front: "Front 2", back: "Back 2" },
-  ];
-
-  fetchMock.mockResponse(JSON.stringify(mockCards));
-
-  const { debug } = render(<App />);
-  debug();
-
-  // Loading message should be displayed initially
-  expect(screen.getByText("Loading...")).toBeInTheDocument();
-
-  // Wait for the data to load
-  await waitFor(() => {
-    expect(screen.getByText("Front 1")).toBeInTheDocument();
-    expect(screen.getByText("Front 2")).toBeInTheDocument();
-    expect(screen.queryByText("Loading...")).toBeNull();
-    debug()
+describe('Editing flashcard', () => {
+  // render app with mocked 1 card
+  it('should open the edit card mode when the edit button is clicked.', async () => {
+    fetchMock.mockResponse(
+      JSON.stringify([
+        { _id: '1', front: 'initial front', back: 'initial back' },
+      ])
+    );
+    render(<App />);
+    // find and click edit button
   });
-
+  // find input expect value from side of cart where opened
+  // change input value
+  // mock patch req with chenged value
+  //  find save btn and save card
+  // mock get req
+  // expect card with new value
 });
