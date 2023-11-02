@@ -45,7 +45,11 @@ const EditCard: React.FC<EditCardProps> = (props) => {
           <Button onClick={props.onCancelEdit} variant='secondary'>
             Cancel
           </Button>
-          <Button onClick={saveEditedCard} variant='primary'>
+          <Button
+            onClick={saveEditedCard}
+            variant='primary'
+            disabled={!inputValue}
+          >
             Save
           </Button>
         </div>

@@ -60,7 +60,30 @@ describe('Editing flashcard', () => {
     expect(screen.queryByTestId('edit-form')).not.toBeInTheDocument();
   });
 
-  // find input expect value from .side of cart where opened
+  // dont save card when input empty
+  it('should not be possible to edit a flashcard by clicking Save button when edited value is empty', async () => {
+    fetchMock.mockResponse(
+      JSON.stringify([
+        { _id: '1', front: 'initial front', back: 'initial back' },
+      ])
+    );
+    render(<App />);
+
+    expect(await screen.findByTestId('cards-list')).not.toBeEmptyDOMElement();
+    expect(screen.getByText('initial front'));
+
+    const editButton = screen.getByTestId('edit-icon');
+    fireEvent.click(editButton);
+
+    expect(screen.getByTestId('edit-form'));
+
+    const input = screen.getByRole('textbox');
+    expect(input).toHaveValue('initial front');
+
+    fireEvent.change(input, { target: { value: '' } });
+    const saveButton = screen.getByText('Save');
+    expect(saveButton).toBeDisabled();
+  });
   // change input value
   // mock patch req with chenged value
   //  find save btn and save card
