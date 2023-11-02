@@ -2,6 +2,8 @@
   Fischkapp 📄
 </h1>
 
+Deployment URL: YOUR_DEPLOYMENT_URL_HERE
+
 This project aims to create a simple app that supports learning.
 
 ---
