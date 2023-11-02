@@ -62,7 +62,7 @@ const Card: React.FC<CardProps> = (props) => {
       )}
       {!isEditMode && (
         <>
-          <div className={styles.content}>
+          <div data-testid='card' className={styles.content}>
             <EditIcon className={styles.icon} onClick={editHandler} />
             <p className={styles.text}>
               {isFlipped ? props.cardData.back : props.cardData.front}

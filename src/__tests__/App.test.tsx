@@ -18,6 +18,21 @@ describe('App', () => {
     expect(screen.queryByTestId('new-card-form')).not.toBeInTheDocument();
     expect(screen.queryByTestId('cards-list')).toBeEmptyDOMElement();
   });
+
+  // render app with 3 cards
+  it('should display flashcards in the list properly', async () => {
+    fetchMock.mockResponse(
+      JSON.stringify([
+        { _id: '1', front: 'first front', back: 'first back' },
+        { _id: '2', front: 'This is front', back: 'This is back' },
+        { _id: '3', front: 'This is third front', back: 'This is third back' },
+      ])
+    );
+    render(<App />);
+
+    const cardElements = await screen.findAllByTestId('card');
+    expect(cardElements).toHaveLength(3);
+  });
 });
 
 // Adding flashcard
