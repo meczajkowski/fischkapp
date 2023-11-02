@@ -21,7 +21,7 @@ describe('Editing flashcard', () => {
   });
 
   // find and click edit button
-  it('should open the edit card mode when the edit button is clicked', async () => {
+  it('should be possible to enter editing mode by clicking edit button', async () => {
     fetchMock.mockResponse(
       JSON.stringify([
         { _id: '1', front: 'initial front', back: 'initial back' },
@@ -36,6 +36,28 @@ describe('Editing flashcard', () => {
     fireEvent.click(editButton);
 
     expect(screen.getByTestId('edit-form'));
+  });
+
+  // exit edit mode
+  it('should be possible to exit editing mode by clicking cancel button', async () => {
+    fetchMock.mockResponse(
+      JSON.stringify([
+        { _id: '1', front: 'initial front', back: 'initial back' },
+      ])
+    );
+    render(<App />);
+
+    expect(await screen.findByTestId('cards-list')).not.toBeEmptyDOMElement();
+    expect(screen.getByText('initial front'));
+
+    const editButton = screen.getByTestId('edit-icon');
+    fireEvent.click(editButton);
+
+    expect(screen.getByTestId('edit-form'));
+
+    const cancelButton = screen.getByText('Cancel');
+    fireEvent.click(cancelButton);
+    expect(screen.queryByTestId('edit-form')).not.toBeInTheDocument();
   });
 
   // find input expect value from .side of cart where opened
