@@ -5,7 +5,7 @@ import styles from './NewCard.module.css';
 
 // components
 import Button from '../UI/Button';
-import Card from '../UI/CardWrapper';
+import CardWrapper from '../UI/CardWrapper';
 import DeleteIcon from '../UI/Icons/DeleteIcon';
 import Input from '../UI/Input';
 import { generateID } from '../../helpers/generateID';
@@ -23,8 +23,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
   let cardData: CardData;
 
   const nextStepHandler = () => {
-    // TODO validation
-    setFormStep(CardSide.back);
+    isValidInputValue(firstStepInputValue) && setFormStep(CardSide.back);
   };
 
   const prevStepHandler = () => {
@@ -40,7 +39,12 @@ const NewCard: React.FC<NewCardProps> = (props) => {
   };
 
   const saveCard = () => {
-    // TODO validation
+    if (
+      !isValidInputValue(secondStepInputValue) ||
+      !isValidInputValue(firstStepInputValue)
+    )
+      return;
+
     cardData = {
       id: generateID(),
       front: firstStepInputValue,
@@ -50,9 +54,18 @@ const NewCard: React.FC<NewCardProps> = (props) => {
     props.onSaveNewCard(cardData);
   };
 
+  const isValidInputValue = (inputValue: string) => {
+    const trimmedInputValue = inputValue.trim();
+    if (trimmedInputValue === '') {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   return (
-    <Card>
-      <div className={styles.content}>
+    <CardWrapper>
+      <div className={styles.content} data-testid='new-card-form'>
         {!isFront && (
           <>
             <p className={styles.frontText}>{firstStepInputValue}</p>
@@ -76,6 +89,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
             {isFront ? 'Cancel' : 'Back'}
           </Button>
           <Button
+            disabled={isFront ? !firstStepInputValue : !secondStepInputValue}
             onClick={isFront ? nextStepHandler : saveCard}
             variant='primary'
           >
@@ -83,7 +97,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
           </Button>
         </div>
       </div>
-    </Card>
+    </CardWrapper>
   );
 };
 
