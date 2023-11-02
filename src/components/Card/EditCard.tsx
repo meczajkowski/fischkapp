@@ -27,7 +27,10 @@ const EditCard: React.FC<EditCardProps> = (props) => {
 
   return (
     <>
-      <div className={`${styles.content} ${props.className}`}>
+      <div
+        data-testid='edit-form'
+        className={`${styles.content} ${props.className}`}
+      >
         <DeleteIcon
           className={styles.deleteIcon}
           onClick={props.onDeleteCard}
