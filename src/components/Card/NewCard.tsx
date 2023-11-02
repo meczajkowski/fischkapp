@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { CardData } from "../../types";
-import { CardSide } from "../../enums";
-import styles from "./NewCard.module.css";
+import React, { useState } from 'react';
+import { CardData } from '../../types';
+import { CardSide } from '../../enums';
+import styles from './NewCard.module.css';
 
 // components
-import Button from "../UI/Button";
-import CardWrapper from "../UI/CardWrapper";
-import DeleteIcon from "../UI/Icons/DeleteIcon";
-import Input from "../UI/Input";
-import { generateID } from "../../helpers/generateID";
+import Button from '../UI/Button';
+import CardWrapper from '../UI/CardWrapper';
+import DeleteIcon from '../UI/Icons/DeleteIcon';
+import Input from '../UI/Input';
+import { generateID } from '../../helpers/generateID';
 
 interface NewCardProps {
   onCancelNewCard: () => void;
@@ -17,8 +17,8 @@ interface NewCardProps {
 
 const NewCard: React.FC<NewCardProps> = (props) => {
   const [formStep, setFormStep] = useState<CardSide>(CardSide.front);
-  const [firstStepInputValue, setFirstStepInputValue] = useState<string>("");
-  const [secondStepInputValue, setSecondStepInputValue] = useState<string>("");
+  const [firstStepInputValue, setFirstStepInputValue] = useState<string>('');
+  const [secondStepInputValue, setSecondStepInputValue] = useState<string>('');
   const isFront = formStep === CardSide.front;
   let cardData: CardData;
 
@@ -56,7 +56,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
 
   const isValidInputValue = (inputValue: string) => {
     const trimmedInputValue = inputValue.trim();
-    if (trimmedInputValue === "") {
+    if (trimmedInputValue === '') {
       return false;
     } else {
       return true;
@@ -86,14 +86,14 @@ const NewCard: React.FC<NewCardProps> = (props) => {
             onClick={isFront ? props.onCancelNewCard : prevStepHandler}
             variant='secondary'
           >
-            {isFront ? "Cancel" : "Back"}
+            {isFront ? 'Cancel' : 'Back'}
           </Button>
           <Button
             disabled={isFront ? !firstStepInputValue : !secondStepInputValue}
             onClick={isFront ? nextStepHandler : saveCard}
             variant='primary'
           >
-            {isFront ? "Next" : "Save"}
+            {isFront ? 'Next' : 'Save'}
           </Button>
         </div>
       </div>
