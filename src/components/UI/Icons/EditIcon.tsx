@@ -7,6 +7,7 @@ const EditIcon: React.FC<IconProps> = (props) => {
   };
   return (
     <svg
+      data-testid='edit-icon'
       className={props.className}
       onClick={handleClick}
       width='40'

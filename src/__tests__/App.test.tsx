@@ -115,3 +115,27 @@ describe('Adding flashcard', () => {
     expect(addedCard).toBeInTheDocument();
   });
 });
+
+// deleting flashcard
+describe('Deleting flashcard', () => {
+  it('should delete flashcard from the list when clicking on Trash icon', async () => {
+    fetchMock.mockResponse(
+      JSON.stringify([{ _id: '1', front: 'first front', back: 'first back' }])
+    );
+    render(<App />);
+
+    expect(await screen.findByTestId('cards-list')).not.toBeEmptyDOMElement();
+    expect(screen.getByText('first front'));
+
+    const editButton = screen.getByTestId('edit-icon');
+    fireEvent.click(editButton);
+
+    expect(screen.getByTestId('edit-form'));
+
+    // mock delete req
+    fetchMock.mockResponse(JSON.stringify([]));
+    const trashButton = screen.getByTestId('trash-icon');
+    fireEvent.click(trashButton);
+    expect(await screen.findByTestId('cards-list')).toBeEmptyDOMElement();
+  });
+});

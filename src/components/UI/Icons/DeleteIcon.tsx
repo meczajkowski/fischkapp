@@ -3,6 +3,7 @@ import { IconProps } from '../../../types';
 const DeleteIcon: React.FC<IconProps> = (props) => {
   return (
     <svg
+      data-testid='trash-icon'
       className={props.className}
       onClick={props.onClick}
       width='40'
