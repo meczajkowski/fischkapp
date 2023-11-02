@@ -29,8 +29,8 @@ jobs:
       - name: Deploy to GitHub Pages
         if: success()
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.name $user_name
+          git config --global user.email $user_email
           npm run build
           npx gh-pages -d dist -b gh-pages
 
