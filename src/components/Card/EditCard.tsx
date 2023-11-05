@@ -17,7 +17,7 @@ interface EditCardProps {
 const EditCard: React.FC<EditCardProps> = (props) => {
   const [inputValue, setInputValue] = useState(props.textValue);
 
-  const inputValueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const inputValueHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(event.target.value);
   };
 

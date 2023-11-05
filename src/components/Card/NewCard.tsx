@@ -30,7 +30,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
     setFormStep(CardSide.front);
   };
 
-  const inputValueHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const inputValueHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (isFront) {
       setFirstStepInputValue(event.target.value);
     } else if (!isFront) {
