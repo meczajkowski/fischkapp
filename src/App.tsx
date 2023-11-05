@@ -118,7 +118,8 @@ function App() {
           };
         });
 
-        setCards(APIcards);
+        const sortedAPIcards = APIcards.reverse();
+        setCards(sortedAPIcards);
         setIsLoading(false);
         setError(null);
       })
