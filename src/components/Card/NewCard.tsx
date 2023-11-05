@@ -8,7 +8,6 @@ import Button from '../UI/Button';
 import CardWrapper from '../UI/CardWrapper';
 import DeleteIcon from '../UI/Icons/DeleteIcon';
 import Input from '../UI/Input';
-import { generateID } from '../../helpers/generateID';
 
 interface NewCardProps {
   onCancelNewCard: () => void;
@@ -46,7 +45,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
       return;
 
     cardData = {
-      id: generateID(),
+      id: '',
       front: firstStepInputValue,
       back: secondStepInputValue,
     };
