@@ -1,14 +1,30 @@
 .content {
   position: relative;
+
+  min-height: var(--card-min-height);
   height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.textContent {
+  width: 100%;
 }
 
 .frontText {
-  position: absolute;
-  top: 14px;
+  min-height: 15px;
+
+  margin-top: 14px;
+  margin-right: 26px;
+  margin-bottom: 8px;
 
   font-size: 12px;
   font-weight: 400;
+
+  word-wrap: break-word;
 }
 
 .deleteIcon {
@@ -18,15 +34,16 @@
   right: -14px;
 }
 
-.input {
-  position: absolute;
-  top: 36px;
+.inputEditMode {
+  margin-top: 36px;
 }
 
 .actions {
-  position: absolute;
-  bottom: 0;
-  right: 0;
+  width: 100%;
+
+  margin-top: 14px;
+
   display: flex;
+  justify-content: end;
   gap: 7px;
 }

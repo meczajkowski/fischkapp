@@ -1,5 +1,7 @@
 .content {
   position: relative;
+
+  min-height: var(--card-min-height);
   height: 100%;
 
   display: flex;
