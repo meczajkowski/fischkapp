@@ -67,19 +67,19 @@ const NewCard: React.FC<NewCardProps> = (props) => {
     <CardWrapper>
       <div className={styles.content} data-testid='new-card-form'>
         {!isFront && (
-          <>
-            <p className={styles.frontText}>{firstStepInputValue}</p>
-            <DeleteIcon
-              className={styles.deleteIcon}
-              onClick={props.onCancelNewCard}
-            />
-          </>
+          <DeleteIcon
+            className={styles.deleteIcon}
+            onClick={props.onCancelNewCard}
+          />
         )}
-        <Input
-          className={styles.input}
-          onChange={inputValueHandler}
-          value={isFront ? firstStepInputValue : secondStepInputValue}
-        />
+
+        <div className={styles.textContent}>
+          <p className={styles.frontText}>{!isFront && firstStepInputValue}</p>
+          <Input
+            onChange={inputValueHandler}
+            value={isFront ? firstStepInputValue : secondStepInputValue}
+          />
+        </div>
 
         <div className={styles.actions}>
           <Button

@@ -36,7 +36,7 @@ const EditCard: React.FC<EditCardProps> = (props) => {
           onClick={props.onDeleteCard}
         />
         <Input
-          className={styles.input}
+          className={styles.inputEditMode}
           onChange={inputValueHandler}
           value={inputValue}
         />
