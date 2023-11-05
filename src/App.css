@@ -4,6 +4,8 @@
   --accent-color: #161616;
   --typo-color: #b6b6b6;
   --border-color: #ebebec;
+
+  --card-min-height: 158px;
 }
 
 * {
