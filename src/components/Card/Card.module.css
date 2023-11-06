@@ -10,7 +10,7 @@
 
   text-align: center;
 
-  transition: transform 0.5s;
+  transition: transform 1s;
 }
 
 .icon {
@@ -35,4 +35,22 @@
 .flipped .content,
 .flipped .edit {
   transform: rotateY(180deg);
+}
+
+.fadeAnimation {
+  animation: fade 1s;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
