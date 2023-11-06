@@ -22,6 +22,7 @@ body {
 button {
   cursor: pointer;
   border: none;
+  color: inherit;
   background: transparent;
   transition: opacity 0.2s;
 }
