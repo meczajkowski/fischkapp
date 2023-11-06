@@ -1,5 +1,5 @@
 import styles from './Card.module.css';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { CardData } from '../../types';
 import { CardSide } from '../../enums';
 
@@ -17,11 +17,27 @@ interface CardProps {
 const Card: React.FC<CardProps> = (props) => {
   const [currentSide, setCurrentSide] = useState(CardSide.front);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isAnimationPlaying, setIsAnimationPlaying] = useState(false);
   let isFlipped = currentSide === CardSide.back;
 
-  const flipHandler = () => {
-    if (isEditMode) return;
+  const cardContentRef = useRef<HTMLDivElement | null>(null);
 
+  const playAnimationOnce = () => {
+    const cardContentElement = cardContentRef.current;
+    if (cardContentElement) {
+      setIsAnimationPlaying(true);
+      cardContentElement.classList.add(styles.fadeAnimation);
+      cardContentElement.addEventListener('animationend', () => {
+        cardContentElement.classList.remove(styles.fadeAnimation);
+        setIsAnimationPlaying(false);
+      });
+    }
+  };
+
+  const flipHandler = () => {
+    if (isEditMode || isAnimationPlaying) return;
+
+    playAnimationOnce();
     setCurrentSide((prevSide) =>
       prevSide === CardSide.front ? CardSide.back : CardSide.front
     );
@@ -62,7 +78,11 @@ const Card: React.FC<CardProps> = (props) => {
       )}
       {!isEditMode && (
         <>
-          <div data-testid='card' className={styles.content}>
+          <div
+            data-testid='card'
+            className={styles.content}
+            ref={cardContentRef}
+          >
             <EditIcon className={styles.icon} onClick={editHandler} />
             <p className={styles.text}>
               {isFlipped ? props.cardData.back : props.cardData.front}
