@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { CardData } from '../../types';
 import { CardSide } from '../../enums';
 import styles from './NewCard.module.css';
@@ -20,6 +20,17 @@ const NewCard: React.FC<NewCardProps> = (props) => {
   const [secondStepInputValue, setSecondStepInputValue] = useState<string>('');
   const isFront = formStep === CardSide.front;
   let cardData: CardData;
+
+  const firstStepInputRef = useRef<HTMLTextAreaElement | null>(null);
+  const secondStepInputRef = useRef<HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    if (isFront && firstStepInputRef.current) {
+      firstStepInputRef.current.focus();
+    } else if (!isFront && secondStepInputRef.current) {
+      secondStepInputRef.current.focus();
+    }
+  }, [isFront]);
 
   const nextStepHandler = () => {
     isValidInputValue(firstStepInputValue) && setFormStep(CardSide.back);
@@ -75,6 +86,7 @@ const NewCard: React.FC<NewCardProps> = (props) => {
         <div className={styles.textContent}>
           <p className={styles.frontText}>{!isFront && firstStepInputValue}</p>
           <Input
+            inputRef={isFront ? firstStepInputRef : secondStepInputRef}
             onChange={inputValueHandler}
             value={isFront ? firstStepInputValue : secondStepInputValue}
           />
@@ -88,7 +100,11 @@ const NewCard: React.FC<NewCardProps> = (props) => {
             {isFront ? 'Cancel' : 'Back'}
           </Button>
           <Button
-            disabled={isFront ? !firstStepInputValue : !secondStepInputValue}
+            disabled={
+              isFront
+                ? !firstStepInputValue.trim()
+                : !secondStepInputValue.trim()
+            }
             onClick={isFront ? nextStepHandler : saveCard}
             variant='primary'
           >

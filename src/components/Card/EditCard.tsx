@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './NewCard.module.css';
 
 // components
@@ -16,6 +16,13 @@ interface EditCardProps {
 
 const EditCard: React.FC<EditCardProps> = (props) => {
   const [inputValue, setInputValue] = useState(props.textValue);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   const inputValueHandler = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(event.target.value);
@@ -36,6 +43,7 @@ const EditCard: React.FC<EditCardProps> = (props) => {
           onClick={props.onDeleteCard}
         />
         <Input
+          inputRef={inputRef}
           className={styles.inputEditMode}
           onChange={inputValueHandler}
           value={inputValue}
