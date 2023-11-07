@@ -56,7 +56,7 @@ const EditCard: React.FC<EditCardProps> = (props) => {
           <Button
             onClick={saveEditedCard}
             variant='primary'
-            disabled={!inputValue}
+            disabled={!inputValue.trim()}
           >
             Save
           </Button>
