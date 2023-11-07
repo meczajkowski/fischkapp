@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import fetchMock from 'jest-fetch-mock';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import App from '../App';
 
 beforeEach(() => {
@@ -142,7 +142,12 @@ describe('Editing flashcard', () => {
       ])
     );
     render(<App />);
-    expect(await screen.findByTestId('cards-list')).not.toBeEmptyDOMElement();
+
+    await waitFor(() => {
+      expect(screen.getByTestId('cards-list')).toContainElement(
+        screen.getByTestId('card')
+      );
+    });
   });
 
   // find and click edit button
@@ -154,7 +159,12 @@ describe('Editing flashcard', () => {
     );
     render(<App />);
 
-    expect(await screen.findByTestId('cards-list')).not.toBeEmptyDOMElement();
+    await waitFor(() => {
+      expect(screen.getByTestId('cards-list')).toContainElement(
+        screen.getByTestId('card')
+      );
+    });
+
     expect(screen.getByText('initial front'));
 
     const editButton = screen.getByTestId('edit-icon');
@@ -172,7 +182,12 @@ describe('Editing flashcard', () => {
     );
     render(<App />);
 
-    expect(await screen.findByTestId('cards-list')).not.toBeEmptyDOMElement();
+    await waitFor(() => {
+      expect(screen.getByTestId('cards-list')).toContainElement(
+        screen.getByTestId('card')
+      );
+    });
+
     expect(screen.getByText('initial front'));
 
     const editButton = screen.getByTestId('edit-icon');
@@ -194,7 +209,12 @@ describe('Editing flashcard', () => {
     );
     render(<App />);
 
-    expect(await screen.findByTestId('cards-list')).not.toBeEmptyDOMElement();
+    await waitFor(() => {
+      expect(screen.getByTestId('cards-list')).toContainElement(
+        screen.getByTestId('card')
+      );
+    });
+
     expect(screen.getByText('initial front'));
 
     const editButton = screen.getByTestId('edit-icon');
@@ -219,7 +239,12 @@ describe('Editing flashcard', () => {
     );
     render(<App />);
 
-    expect(await screen.findByTestId('cards-list')).not.toBeEmptyDOMElement();
+    await waitFor(() => {
+      expect(screen.getByTestId('cards-list')).toContainElement(
+        screen.getByTestId('card')
+      );
+    });
+
     expect(screen.getByText('initial front'));
 
     const editButton = screen.getByTestId('edit-icon');
@@ -263,7 +288,12 @@ describe('Deleting flashcard', () => {
     );
     render(<App />);
 
-    expect(await screen.findByTestId('cards-list')).not.toBeEmptyDOMElement();
+    await waitFor(() => {
+      expect(screen.getByTestId('cards-list')).toContainElement(
+        screen.getByTestId('card')
+      );
+    });
+
     expect(screen.getByText('first front'));
 
     // click edit button to open edit form where trash icon lives
