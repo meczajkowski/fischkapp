@@ -8,6 +8,7 @@ import { AppLayout } from './components/AppLayout';
 import Card from './components/Card/Card';
 import CardsList from './components/Card/CardsList';
 import NewCard from './components/Card/NewCard';
+import LoadingScreen from './components/UI/LoadingScreen';
 
 const noCardsTextStyles = {
   color: 'var(--typo-color)',
@@ -30,6 +31,7 @@ function App() {
 
   const saveNewCard = (cardData: CardData) => {
     setIsLoading(true);
+    setNewCardIsAdded(false);
 
     fetch('https://training.nerdbord.io/api/v1/fischkapp/flashcards', {
       method: 'POST',
@@ -45,7 +47,6 @@ function App() {
       .then((response) => response.json())
       .then(() => {
         fetchFlashcards();
-        setNewCardIsAdded(false);
       })
       .catch((err) => {
         setError(err.message);
@@ -140,25 +141,22 @@ function App() {
       {newCardIsAdded && (
         <NewCard onSaveNewCard={saveNewCard} onCancelNewCard={cancelNewCard} />
       )}
-
-      {!error && !isLoading && (
-        <CardsList>
-          {cards.map((card: CardData) => (
-            <Card
-              onDelete={removeCard}
-              onUpdate={updateCard}
-              key={card.id}
-              cardData={card}
-            />
-          ))}
-        </CardsList>
-      )}
-
       {cards.length === 0 && !newCardIsAdded && !isLoading && !error && (
         <p style={noCardsTextStyles}>Add your first flashcard</p>
       )}
-      {isLoading && <p style={noCardsTextStyles}>Loading...</p>}
+      {isLoading && <LoadingScreen />}
       {error && <p style={noCardsTextStyles}>{error}</p>}
+
+      <CardsList>
+        {cards.map((card: CardData) => (
+          <Card
+            onDelete={removeCard}
+            onUpdate={updateCard}
+            key={card.id}
+            cardData={card}
+          />
+        ))}
+      </CardsList>
     </AppLayout>
   );
 }
