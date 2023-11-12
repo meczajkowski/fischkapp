@@ -20,6 +20,7 @@ const EditCard: React.FC<EditCardProps> = (props) => {
 
   useEffect(() => {
     if (inputRef.current) {
+      inputRef.current.value = inputValue;
       inputRef.current.focus();
     }
   }, []);
@@ -46,7 +47,6 @@ const EditCard: React.FC<EditCardProps> = (props) => {
           inputRef={inputRef}
           className={styles.inputEditMode}
           onChange={inputValueHandler}
-          value={inputValue}
         />
 
         <div className={styles.actions}>
