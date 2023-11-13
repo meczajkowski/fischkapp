@@ -47,6 +47,7 @@ const EditCard: React.FC<EditCardProps> = (props) => {
           inputRef={inputRef}
           className={styles.inputEditMode}
           onChange={inputValueHandler}
+          value={inputRef.current?.value}
         />
 
         <div className={styles.actions}>
