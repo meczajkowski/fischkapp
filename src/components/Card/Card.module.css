@@ -24,6 +24,7 @@
 
 .text {
   max-width: 100%;
+  margin: 41px 27px;
   white-space: normal;
   word-wrap: break-word;
 }
