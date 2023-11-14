@@ -39,7 +39,7 @@
 }
 
 .fadeAnimation {
-  animation: fade 1s;
+  animation: fade 0.5s;
 }
 
 @keyframes fade {
@@ -47,7 +47,7 @@
     opacity: 0;
   }
 
-  20% {
+  50% {
     opacity: 0;
   }
 
