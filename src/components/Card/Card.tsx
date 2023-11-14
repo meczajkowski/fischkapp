@@ -17,7 +17,6 @@ interface CardProps {
 const Card: React.FC<CardProps> = (props) => {
   const [currentSide, setCurrentSide] = useState(CardSide.front);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [isAnimationPlaying, setIsAnimationPlaying] = useState(false);
   let isFlipped = currentSide === CardSide.back;
 
   const cardContentRef = useRef<HTMLDivElement | null>(null);
@@ -25,17 +24,15 @@ const Card: React.FC<CardProps> = (props) => {
   const playAnimationOnce = () => {
     const cardContentElement = cardContentRef.current;
     if (cardContentElement) {
-      setIsAnimationPlaying(true);
       cardContentElement.classList.add(styles.fadeAnimation);
       cardContentElement.addEventListener('animationend', () => {
         cardContentElement.classList.remove(styles.fadeAnimation);
-        setIsAnimationPlaying(false);
       });
     }
   };
 
   const flipHandler = () => {
-    if (isEditMode || isAnimationPlaying) return;
+    if (isEditMode) return;
 
     playAnimationOnce();
     setCurrentSide((prevSide) =>
