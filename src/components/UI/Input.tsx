@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import styles from './Input.module.css';
 
 interface InputProps {
@@ -10,14 +10,18 @@ interface InputProps {
 
 const Input: React.FC<InputProps> = (props) => {
   const classNames = [styles.input, props.className].join(' ');
+  const [hasMounted, setHasMounted] = useState(false);
 
-  useEffect(() => {
-    if (props.inputRef && props.inputRef.current) {
+  useLayoutEffect(() => {
+    if (hasMounted && props.inputRef && props.inputRef.current) {
       props.inputRef.current.style.height = 'auto'; // Reset the height to auto
       props.inputRef.current.style.height =
         props.inputRef.current.scrollHeight + 'px'; // Set the height based on the content
+    } else {
+      // Mark the component as mounted after the first render
+      setHasMounted(true);
     }
-  }, [props.value]);
+  }, [props.value, hasMounted]);
 
   return (
     <textarea
